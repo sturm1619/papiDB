@@ -1,8 +1,11 @@
 import logging
 from string import Template
+
+import os
 import csv
 import sqlite3
 from sqlite3 import DatabaseError
+
 
 debug_messages: bool = True
 error_template: str = Template("There was an error ${condition}.")
@@ -29,7 +32,7 @@ def main():
     if debug_messages: print_and_log("Conneting to papiDB...")
     try:
         connection = sqlite3.connect(
-            'papi.db', timeout=5.0, 
+            os.environ['repo_root'] + 'data/papi.db', timeout=5.0 
         )
         cursor = connection.cursor()
     except DatabaseError as error:
